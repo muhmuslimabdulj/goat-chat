@@ -1,0 +1,33 @@
+{
+  "name": "goat-chat",
+  "version": "1.0.0",
+  "description": "GOAT Private Chat",
+  "scripts": {
+    "tailwind": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify",
+    "tailwind:watch": "tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch",
+    "cap:sync": "npx cap sync",
+    "cap:add:android": "npx cap add android",
+    "cap:open:android": "npx cap open android",
+    "cap:assets": "npx @capacitor/assets generate"
+  },
+  "dependencies": {
+    "@capacitor-community/text-to-speech": "^6.1.0",
+    "@capacitor/android": "^8.0.1",
+    "@capacitor/app": "^8.0.0",
+    "@capacitor/clipboard": "^8.0.0",
+    "@capacitor/core": "^8.0.1",
+    "@capacitor/device": "^8.0.0",
+    "@capacitor/haptics": "^8.0.0",
+    "@capacitor/local-notifications": "^8.0.0",
+    "@capacitor/motion": "^8.0.0",
+    "@capacitor/share": "^8.0.0",
+    "@capacitor/status-bar": "^8.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.0",
+    "@capacitor/cli": "^8.0.1",
+    "dotenv": "^16.4.0",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.7.0"
+  }
+}

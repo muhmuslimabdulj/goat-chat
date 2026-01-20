@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- GOAT Chat Color Palette -->
+    <color name="colorPrimary">#FFD100</color>
+    <color name="colorPrimaryDark">#FFD100</color>
+    <color name="colorAccent">#000000</color>
+    <color name="splashBackground">#FFF4E0</color>
+    <color name="windowBackground">#FFF4E0</color>
+</resources>

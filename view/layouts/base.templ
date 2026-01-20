@@ -1,0 +1,121 @@
+package layouts
+
+import "github.com/mmuslimabdulj/goat-chat/internal/domain"
+
+templ Base(title string, users []*domain.User) {
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+	<meta name="description" content="GOAT Chat - Public chat room yang seru dan jahil!" />
+	<title>{ title }</title>
+
+	<!-- Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+		rel="stylesheet" />
+
+	<!-- Tailwind CSS -->
+	<link href="/static/css/output.css" rel="stylesheet" />
+	<link href="/static/css/output.css?v=20260120" rel="stylesheet">
+	<link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+	<link rel="manifest" href="/static/manifest.json" />
+	<meta name="theme-color" content="#000000" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<!-- App JS -->
+    <script type="module" src="/static/js/app.js?v=20260120p"></script>
+	<script src="/static/js/capacitor-bridge.js"></script>
+
+	<!-- AlpineJS -->
+	<script defer src="/static/js/vendor/alpine.min.js"></script>
+
+	<!-- Fullscreen CSS -->
+	<style>
+		/* Fullscreen container styling */
+		:fullscreen,
+		:-webkit-full-screen {
+			width: 100vw !important;
+			height: 100vh !important;
+			background: black !important;
+		}
+
+		:fullscreen #mobile-nobar-player,
+		:-webkit-full-screen #mobile-nobar-player {
+			width: 100% !important;
+			height: 100% !important;
+			position: absolute !important;
+			inset: 0 !important;
+		}
+
+		:fullscreen iframe,
+		:-webkit-full-screen iframe {
+			width: 100% !important;
+			height: 100% !important;
+		}
+
+		/* Hide YouTube "More videos" overlay when paused */
+		.nobar-paused-overlay {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 35%;
+			background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.9) 50%, transparent 100%);
+			pointer-events: none;
+			z-index: 10;
+		}
+
+		/* Prevent FOUC - hide elements with x-cloak until Alpine.js initializes */
+		[x-cloak] {
+			display: none !important;
+		}
+
+		/* View Transition API - Smooth page transitions */
+		@view-transition {
+			navigation: auto;
+		}
+
+		/* Fade out old page */
+		::view-transition-old(root) {
+			animation: page-fade-out 0.15s ease-out forwards;
+		}
+
+		/* Fade in new page */
+		::view-transition-new(root) {
+			animation: page-fade-in 0.25s ease-in forwards;
+		}
+
+		@keyframes page-fade-out {
+			from { opacity: 1; transform: scale(1); }
+			to { opacity: 0; transform: scale(0.98); }
+		}
+
+		@keyframes page-fade-in {
+			from { opacity: 0; transform: scale(1.02); }
+			to { opacity: 1; transform: scale(1); }
+		}
+
+		/* Page load animation for browsers without View Transition */
+		@keyframes initial-fade-in {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		body {
+			animation: initial-fade-in 0.3s ease-out;
+		}
+	</style>
+</head>
+
+<body class="h-full font-sans antialiased theme-transition" style="background-color: var(--bg-color, #FFF4E0);">
+	<div id="app" class="h-full" x-data="chatApp()" x-init="init()" x-cloak>
+		{ children... }
+	</div>
+</body>
+
+</html>
+}

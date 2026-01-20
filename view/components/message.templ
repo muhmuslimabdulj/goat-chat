@@ -1,0 +1,31 @@
+package components
+
+templ Message(name string, color string, text string, isOwn bool) {
+	<div class={ "flex gap-3 mb-4", templ.KV("flex-row-reverse", isOwn) }>
+		<!-- Avatar -->
+		<div 
+			class="w-10 h-10 rounded-full border-4 border-black flex items-center justify-center text-lg font-bold shadow-brutal-sm shrink-0"
+			style={ "background-color: " + color }
+		>
+			{ string([]rune(name)[0]) }
+		</div>
+		
+		<!-- Message Bubble -->
+		<div class={ "max-w-[75%] lg:max-w-[60%]", templ.KV("items-end", isOwn) }>
+			<div class="text-xs font-semibold mb-1 px-1" style={ "color: " + color }>
+				{ name }
+			</div>
+			<div class="border-4 border-black rounded-lg p-3 shadow-brutal-sm bg-white">
+				<p class="text-sm leading-relaxed break-words">{ text }</p>
+			</div>
+		</div>
+	</div>
+}
+
+templ SystemMessage(text string) {
+	<div class="flex justify-center my-4">
+		<div class="px-4 py-2 bg-gray-200 rounded-full text-xs font-medium text-gray-600 border-2 border-black">
+			{ text }
+		</div>
+	</div>
+}

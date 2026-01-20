@@ -1,0 +1,66 @@
+package components
+
+import "github.com/mmuslimabdulj/goat-chat/internal/domain"
+
+templ UserList(users []*domain.User) {
+<div class="h-full flex flex-col bg-white lg:border-l-4 lg:border-black">
+	<div class="hidden lg:block p-2 lg:p-4 border-b-4 border-black bg-neon-yellow">
+		<h2 class="font-black text-xl uppercase tracking-widest">👥 Online</h2>
+		<div class="inline-block bg-black text-white px-2 py-0.5 text-xs font-bold transform -rotate-2 mt-1"
+			x-text="'(' + userCount + ')'"></div>
+	</div>
+
+	<div class="flex-1 overflow-y-auto p-4 space-y-3 bg-[#FFF0F5]">
+		<template x-for="user in users" :key="user.id">
+			<div
+				class="flex items-center gap-3 p-3 border-3 border-black bg-white shadow-brutal-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000] transition-all duration-200">
+				<!-- Avatar -->
+				<div class="w-10 h-10 border-3 border-black flex items-center justify-center text-lg font-black shadow-sm shrink-0"
+					:style="'background-color: ' + user.color" x-text="user.persona.charAt(0)"></div>
+
+				<!-- Info -->
+				<div class="flex-1 min-w-0">
+					<div class="flex items-center mb-1">
+						<div class="font-bold text-sm truncate uppercase tracking-tight" x-text="user.persona"></div>
+						<span x-show="isHost(user.id)" title="Host" class="ml-1 text-sm animate-bounce">👑</span>
+					</div>
+
+					<!-- Anti-Ghosting Badge & Battery -->
+					<div class="flex items-center gap-2 text-xs font-bold">
+						<!-- Battery -->
+						<template x-if="user.battery >= 0">
+							<div
+								class="flex items-center gap-1.5 bg-white px-2 py-0.5 border-2 border-black rounded shadow-[2px_2px_0px_0px_#000]">
+								<span x-text="user.battery >= 70 ? '🔋' : (user.battery >= 30 ? '🪫' : '⚠️')"></span>
+								<span x-text="user.battery + '%'"></span>
+							</div>
+						</template>
+					</div>
+
+					<!-- Host Controls (Icon-only) -->
+					<div x-show="hostId === myId && user.id !== myId" class="flex gap-2 mt-2">
+						<button @click="kickUser(user.id)"
+							class="group relative w-11 h-11 flex items-center justify-center rounded-xl border-3 border-black bg-white shadow-[4px_4px_0px_0px_#000] hover:bg-red-500 transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+							title="Kick">
+							<span class="text-xl group-hover:scale-125 transition-transform duration-200">🚫</span>
+						</button>
+						<button @click="transferHost(user.id)"
+							class="group relative w-11 h-11 flex items-center justify-center rounded-xl border-3 border-black bg-white shadow-[4px_4px_0px_0px_#000] hover:bg-yellow-400 transition-all active:translate-x-[4px] active:translate-y-[4px] active:shadow-none"
+							title="Transfer Host">
+							<span class="text-xl group-hover:scale-125 transition-transform duration-200">👑</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</template>
+
+		<!-- Empty state -->
+		<template x-if="users.length === 0">
+			<div class="text-center text-gray-500 py-8 border-3 border-black dashed bg-white/50">
+				<p class="text-4xl mb-2 grayscale opacity-50">👻</p>
+				<p class="text- font-bold uppercase">Sepi Bos...</p>
+			</div>
+		</template>
+	</div>
+</div>
+}

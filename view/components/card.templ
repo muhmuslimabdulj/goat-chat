@@ -1,0 +1,40 @@
+package components
+
+templ Card(title string) {
+	<div class="border-4 border-black p-4 rounded-lg shadow-brutal bg-white">
+		if title != "" {
+			<h3 class="font-bold text-lg mb-2">{ title }</h3>
+		}
+		{ children... }
+	</div>
+}
+
+templ Button(variant string) {
+	if variant == "primary" {
+		<button class="px-4 py-2 font-bold rounded-lg border-4 border-black shadow-brutal bg-neon-yellow hover:bg-neon-pink active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-100">
+			{ children... }
+		</button>
+	} else if variant == "danger" {
+		<button class="px-4 py-2 font-bold rounded-lg border-4 border-black shadow-brutal bg-neon-red hover:bg-neon-pink active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-100 text-white">
+			{ children... }
+		</button>
+	} else if variant == "secondary" {
+		<button class="px-4 py-2 font-bold rounded-lg border-4 border-black shadow-brutal bg-white hover:bg-gray-100 active:translate-x-1 active:translate-y-1 active:shadow-none transition-all duration-100">
+			{ children... }
+		</button>
+	} else {
+		<button class="px-3 py-2 font-bold rounded-lg border-4 border-black shadow-brutal-sm bg-neon-green hover:bg-neon-cyan active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all duration-100">
+			{ children... }
+		</button>
+	}
+}
+
+templ IconButton(emoji string, label string) {
+	<button 
+		class="w-10 h-10 flex items-center justify-center text-xl font-bold rounded-lg border-4 border-black shadow-brutal-sm bg-white hover:bg-gray-100 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all duration-100"
+		aria-label={ label }
+		title={ label }
+	>
+		{ emoji }
+	</button>
+}

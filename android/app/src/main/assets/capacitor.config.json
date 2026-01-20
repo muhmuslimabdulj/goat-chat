@@ -1,0 +1,29 @@
+{
+	"appId": "com.goatchat.app",
+	"appName": "GOAT Chat",
+	"webDir": "www",
+	"server": {
+		"url": "https://goat-chat.koyeb.app",
+		"allowNavigation": [
+			"goat-chat.koyeb.app",
+			"*.goat-chat.koyeb.app"
+		],
+		"errorPath": "offline.html"
+	},
+	"android": {
+		"allowMixedContent": true
+	},
+	"plugins": {
+		"SplashScreen": {
+			"launchAutoHide": false,
+			"backgroundColor": "#FFF4E0",
+			"androidSplashResourceName": "splash",
+			"showSpinner": false
+		},
+		"StatusBar": {
+			"overlaysWebView": false,
+			"backgroundColor": "#FFF4E0",
+			"style": "LIGHT"
+		}
+	}
+}

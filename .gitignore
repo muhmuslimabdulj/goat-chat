@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+bin/
+static/css/output.css
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Templ generated files (optional, can be committed)
+*_templ.go
+
+# Air tmp
+tmp/
+
+# Capacitor - iOS platform (generated, not used yet)
+/ios/
+
+# Capacitor - Android build artifacts (keep source, ignore outputs)
+/android/app/build/
+/android/.gradle/
+/android/build/
+
+# Capacitor - Build files
+*.keystore
+*.jks
+

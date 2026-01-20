@@ -1,0 +1,33 @@
+{
+    "$schema": "https://unpkg.com/@capacitor/assets@latest/capacitor-assets-schema.json",
+    "logLevel": "debug",
+    "android": {
+        "icon": {
+            "sources": [
+                "assets/logo.svg"
+            ],
+            "backgroundColor": "#FFD100"
+        },
+        "splash": {
+            "sources": [
+                "assets/logo.svg"
+            ],
+            "backgroundColor": "#FFF4E0",
+            "resizeMode": "contain"
+        }
+    },
+    "pwa": {
+        "icon": {
+            "sources": [
+                "assets/logo.svg"
+            ],
+            "backgroundColor": "#FFD100"
+        },
+        "splash": {
+            "sources": [
+                "assets/logo.svg"
+            ],
+            "backgroundColor": "#FFD100"
+        }
+    }
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>GOAT Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-color: #FFF4E0;
+            --primary-color: #FFD100;
+            --accent-color: #FF6B9C;
+            --text-color: #000000;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            max-width: 340px;
+        }
+        
+        /* Neobrutalism card */
+        .card {
+            background: white;
+            border: 4px solid black;
+            box-shadow: 8px 8px 0 0 rgba(0, 0, 0, 1);
+            padding: 2rem;
+            width: 100%;
+        }
+        
+        /* Loading State */
+        .loading-state .loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .loading-state .loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid black;
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-state .text {
+            font-size: 1.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+        
+        .loading-state .subtext {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        /* Offline State */
+        .offline-state {
+            display: none;
+        }
+        
+        .offline-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--accent-color);
+            border: 4px solid black;
+            box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+        }
+        
+        .offline-icon svg {
+            width: 48px;
+            height: 48px;
+            color: black;
+        }
+        
+        .offline-state .title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        
+        .offline-state .description {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        
+        .retry-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: black;
+            border: 4px solid black;
+            box-shadow: 4px 4px 0 0 rgba(0, 0, 0, 1);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+        
+        .retry-btn:active {
+            box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 1);
+            transform: translate(2px, 2px);
+        }
+        
+        .retry-btn.loading {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 3px solid black;
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ef4444;
+            border: 2px solid black;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .status-dot.online {
+            background: #22c55e;
+            animation: none;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .brand {
+            position: absolute;
+            bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border: 3px solid black;
+            box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 1);
+        }
+        
+        /* Decorative elements - neobrutalism style */
+        .deco-circle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 4px solid black;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+        
+        .deco-circle.top-left {
+            top: 10%;
+            left: 5%;
+            background: var(--accent-color);
+        }
+        
+        .deco-circle.bottom-right {
+            bottom: 15%;
+            right: 5%;
+            background: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative elements -->
+    <div class="deco-circle top-left"></div>
+    <div class="deco-circle bottom-right"></div>
+    
+    <!-- Loading State -->
+    <div class="container loading-state" id="loadingState">
+        <div class="card">
+            <div class="loader-container">
+                <div class="loader"></div>
+                <div class="text">GOAT Chat</div>
+                <div class="subtext">Menghubungkan ke server...</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Offline State -->
+    <div class="container offline-state" id="offlineState">
+        <div class="card">
+            <div class="offline-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.288 15.038a5.25 5.25 0 017.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12.53 18.22l-.53.53-.53-.53a.75.75 0 011.06 0z"/>
+                    <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="title">Offline Mode!</div>
+            <div class="description">
+                Tidak ada koneksi internet.<br>
+                Periksa jaringan kamu dan coba lagi.
+            </div>
+            <button class="retry-btn" id="retryBtn" onclick="retryConnection()">
+                Coba Lagi
+            </button>
+            <div class="status-indicator">
+                <span>Tap tombol di atas untuk mencoba lagi</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="brand">🐐 GOAT Chat</div>
+    
+    <script>
+        // Server URL
+        const SERVER_URL = 'https://goat-chat.koyeb.app';
+        
+        const loadingState = document.getElementById('loadingState');
+        const offlineState = document.getElementById('offlineState');
+        const retryBtn = document.getElementById('retryBtn');
+        function showLoading() {
+            loadingState.style.display = 'flex';
+            offlineState.style.display = 'none';
+            retryBtn.classList.remove('loading');
+            retryBtn.textContent = 'Coba Lagi';
+        }
+        
+        function showOffline() {
+            loadingState.style.display = 'none';
+            offlineState.style.display = 'flex';
+            retryBtn.classList.remove('loading');
+            retryBtn.textContent = 'Coba Lagi';
+        }
+        
+        async function checkServerAndRedirect() {
+            showLoading();
+            
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                await fetch(SERVER_URL, {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                window.location.href = SERVER_URL;
+                
+            } catch (error) {
+                console.log('Server not reachable:', error);
+                showOffline();
+                updateStatus(false);
+            }
+        }
+        
+        function retryConnection() {
+            retryBtn.classList.add('loading');
+            retryBtn.textContent = 'Mencoba...';
+            
+            setTimeout(() => {
+                checkServerAndRedirect();
+            }, 300);
+        }
+        
+        window.addEventListener('online', () => {
+            setTimeout(() => {
+                checkServerAndRedirect();
+            }, 1000);
+        });
+        
+        window.addEventListener('load', () => {
+            checkServerAndRedirect();
+        });
+    </script>
+</body>
+</html>
